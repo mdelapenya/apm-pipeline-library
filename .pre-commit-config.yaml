@@ -41,7 +41,6 @@ repos:
     rev: current
     hooks:
     -   id: check-bash-syntax
-    -   id: check-abstract-classes-and-trait
     -   id: check-jsonslurper-class
     -   id: check-jenkins-pipelines
         files: ^(.ci/(.*\.groovy|Jenkinsfile)|Jenkinsfile|resources/JenkinsfileTemplate.groovy)$

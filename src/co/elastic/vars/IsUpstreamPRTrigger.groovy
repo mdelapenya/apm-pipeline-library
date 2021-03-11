@@ -15,4 +15,23 @@
 // specific language governing permissions and limitations
 // under the License.
 
-@groovy.transform.BaseScript co.elastic.vars.IsUpstreamPRTrigger steps
+package co.elastic.vars
+
+import org.jenkinsci.plugins.workflow.cps.CpsScript
+
+/**
+  Check it the build was triggered by an upstream job from a pull request.
+
+  def upstreamPRTrigger = isUpstreamPRTrigger()
+*/
+abstract class IsUpstreamPRTrigger extends CpsScript {
+    boolean call() {
+        def buildCause = currentBuild.getBuildCauses()?.find{ it._class == 'hudson.model.Cause$UpstreamCause'}
+        if (buildCause?.upstreamProject?.toUpperCase()?.contains("PR-")) {
+            log(level: 'DEBUG', text: "isUpstreamPRTrigger: ${buildCause?.upstreamProject?.toString()}")
+            return true
+        }
+
+        return false
+    }
+}
